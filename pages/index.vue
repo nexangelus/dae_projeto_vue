@@ -10,6 +10,7 @@
               <div class="form-group">
                 <label>User Name</label>
                 <input
+                  v-model="username"
                   type="text"
                   class="form-control"
                   placeholder="User Name"
@@ -18,12 +19,13 @@
               <div class="form-group">
                 <label>Password</label>
                 <input
+                  v-model="password"
                   type="password"
                   class="form-control"
                   placeholder="Password"
                 />
               </div>
-              <button type="submit" class="btn btn-secondary">Login</button>
+              <button @click.prevent="login" class="btn btn-secondary">Login</button>
             </form>
           </div>
         </div>
@@ -33,10 +35,32 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      username: null,
+      password: null,
+    };
+  },
+  methods: {
+    login() {
+      let credentials = `username=${this.username}&password=${this.password}`
+
+      this.$axios
+        .$post("/api/login/token", credentials)
+        .then((response) => {
+          
+        });
+    },
+  },
+};
 </script>
 
 <style>
+*{
+  background-color: #313334;
+  color: white;
+}
 .container {
   margin: 0 auto;
   min-height: 100vh;
