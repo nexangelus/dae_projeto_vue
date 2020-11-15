@@ -54,14 +54,15 @@ export default {
         this.$toast.success('You are logged in!').goAway(1500)
         // Admin, Client, Designer, Manufacturer
         const groups = this.$auth.user.groups;
+        const username = this.$auth.user.sub;
         if (groups.includes('Admin')) {
           this.$router.push('/admin')
         } else if (groups.includes('Client')) {
-          this.$router.push('/client/me')
+          this.$router.push(`/client/${username}`)
         } else if (groups.includes('Designer')) {
-          this.$router.push('/designer/me')
+          this.$router.push(`/designer/${username}`)
         } else if (groups.includes('Manufacturer')) {
-          this.$router.push('/manufacturer/me')
+          this.$router.push(`/manufacturer/${username}`)
         }
       })
       promise.catch(() => {

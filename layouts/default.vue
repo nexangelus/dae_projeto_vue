@@ -57,10 +57,10 @@ html {
   box-sizing: border-box;
   margin: 0;
 }
-#main {
+/*#main {
   background-color: #313334;
   color: white;
-}
+}*/
 
 .button--green {
   display: inline-block;

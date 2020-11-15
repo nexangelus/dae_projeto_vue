@@ -11,8 +11,8 @@
     <tr v-for="project of projects" :key="project.id">
       <td>{{project.title}}</td>
       <td>{{project.description}}</td>
-      <td>{{project.client.name}}</td>
-      <td>{{project.designer.name}}</td>
+      <td>{{project.clientUsername}}</td>
+      <td>{{project.designerUsername}}</td>
       <td>{{project.created}}</td>
       <td>{{project.updated}}</td>
     </tr>
