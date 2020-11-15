@@ -15,11 +15,9 @@
         <b-navbar-nav class="ml-auto">
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
-            <template #button-content>
-              User
-            </template>
+            <template #button-content v-if="$auth.user"> {{$auth.user.sub}} </template>
             <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+            <b-dropdown-item @click.prevent="signOut">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -29,18 +27,21 @@
     </div>
   </div>
 </template>
+<script>
+export default {
+  methods: {
+    signOut() {
+      this.$auth.logout();
+      this.$router.push("/");
+    },
+  },
+};
+</script>
 
 <style>
 html {
-  font-family:
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
