@@ -44,23 +44,39 @@ export default {
   },
   methods: {
     login() {
-      let credentials = `username=${this.username}&password=${this.password}`
-
-      this.$axios
-        .$post("/api/login/token", credentials)
-        .then((response) => {
-          
-        });
+      const promise = this.$auth.loginWith('local', {
+        data: {
+          username: this.username,
+          password: this.password
+        }
+      })
+      promise.then(() => {
+        this.$toast.success('You are logged in!').goAway(1500)
+        // Admin, Client, Designer, Manufacturer
+        const groups = this.$auth.user.groups;
+        if (groups.includes('Admin')) {
+          this.$router.push('/admin')
+        } else if (groups.includes('Client')) {
+          this.$router.push('/client/me')
+        } else if (groups.includes('Designer')) {
+          this.$router.push('/designer/me')
+        } else if (groups.includes('Manufacturer')) {
+          this.$router.push('/manufacturer/me')
+        }
+      })
+      promise.catch(() => {
+        this.$toast.error('Sorry, you cannot login. Ensure your credentials are correct').goAway(1500)
+      })
     },
   },
 };
 </script>
 
 <style>
-*{
+/**{
   background-color: #313334;
   color: white;
-}
+}*/
 .container {
   margin: 0 auto;
   min-height: 100vh;
