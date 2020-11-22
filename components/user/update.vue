@@ -3,7 +3,7 @@
     <div>Password: <input v-model="user.password" type="password" /></div>
     <div>Name: <input v-model="user.name" type="text" /></div>
     <div>Email: <input v-model="user.email" type="email" /></div>
-    <div v-if="$auth.user.groups.includes('client')">
+    <div v-if="$auth.user.groups.includes('Client') || $auth.user.groups.includes('Manufacturer')">
         <div>Address <input v-model="user.address" type="text"/></div>
         <div>Contact <input v-model="user.contact" type="text"/></div>
     </div>
@@ -18,7 +18,7 @@ export default {
   data() {
     return {
       user: [],
-      type: this.$auth.user.groups.includes('client')
+      type: this.$auth.user.groups.includes('Client','Manufacturer'),
     };
   },
   mounted() {
@@ -33,7 +33,11 @@ export default {
           username: this.user.username,
           password: this.user.password,
           name: this.user.name,
-          email: this.user.email
+          email: this.user.email,
+          if (type) {
+              address: this.user.address;
+              contact: this.user.contact;
+          }
         })
         .then(() => {
             //TODO voltar para o profile
