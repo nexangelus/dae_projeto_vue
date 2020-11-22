@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Create :auth="auth"/>
+    <Create/>
   </div>
 </template>
 
