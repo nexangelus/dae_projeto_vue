@@ -1,8 +1,8 @@
 <template>
-  <Details/>
+  <Update/>
 </template>
 <script>
-import Details from "@/components/user/details";
+import Update from "@/components/user/update";
 export default {
  
 };

@@ -16,7 +16,7 @@
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
             <template #button-content v-if="$auth.user"> {{$auth.user.sub}} </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
+            <b-dropdown-item :to="`/${$auth.user.groups[0].toLowerCase()}/${$auth.user.sub}/`">Profile</b-dropdown-item>
             <b-dropdown-item @click.prevent="signOut">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
