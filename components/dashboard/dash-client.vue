@@ -1,32 +1,33 @@
 <template>
-  <div class="container-fluid">
-    <b-breadcrumb :items="items"></b-breadcrumb>
+  <div>
+    <h1>Olá {{client.name}}</h1>
     <projects_list :projects="projects"/>
   </div>
 </template>
 
 <script>
 import Projects_list from "@/components/projects_list";
+
 export default {
-  name: 'project',
   components: {Projects_list},
+  name: "dash-client",
   data: function () {
     return {
-      projects: null,
-      items: [{
-        text: 'Dashboard',
-        to: { name: 'dashboard' }
-      }, {
-        text: 'Project',
-        to: { name: 'project' }
-      }]
+      client: {name:""},
+      projects: null
     }
   },
   computed: {
+    username () {
+      return this.$auth.user.sub
+    }
   },
   mounted() {
     //const user = this.username == "me" ? this.$auth.user.sub : this.username
-    this.$axios.$get(`/api/projects`).then((response) => {
+    this.$axios.$get(`/api/clients/${this.username}`).then((response) => {
+      this.client = response;
+    })
+    this.$axios.$get(`/api/clients/${this.username}/projects`).then((response) => {
       this.projects = response;
     })
   }
