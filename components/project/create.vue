@@ -7,10 +7,15 @@
     <form @submit.prevent="create">
       <div class="form-group">
         <label for="clientUsername">Client</label>
-        <input id="clientUsername" class="form-control" v-model="clientUsername" type="text"/></div>
+        <input id="clientUsername" class="form-control" list="clients" v-model="clientSearch" @keyup="searchClients">
+        <datalist id="clients">
+          <option v-for="client of clientsSearch" :value="client.name">{{ client.username }}</option>
+        </datalist>
+      </div>
       <div class="form-group">
         <label for="title">Project Title</label>
-        <input v-model="title" id="title" class="form-control" type="text"/></div>
+        <input v-model="title" id="title" class="form-control" type="text"/>
+      </div>
       <div class="form-group">
         <label for="description">Project Description</label>
         <textarea class="form-control" id="description" v-model="description" rows="3"></textarea>
@@ -24,26 +29,33 @@
 
 <script>
 export default {
+  name: 'project-create',
   data() {
     return {
-      clientUsername: null,
+      clientSearch: null,
+      clientsSearch: [],
+      clientName: null,
       designerUsername: this.$auth.user.sub,
       title: null,
       description: null,
       items: [{
-        text: 'Projects',
-        href: '#'
+        text: 'Dashboard',
+        to: { name: 'dashboard' }
+      }, {
+        text: 'Project',
+        to: { name: 'project' }
       }, {
         text: 'Create',
-        active: true
+        to: { name: 'project-create' }
       }]
     }
   },
   methods: {
     create() {
-      this.$axios
-        .$post("/api/projects", {
-          clientUsername: this.clientUsername,
+      let username = this.clientsSearch.find(x => x.name == this.clientSearch)
+      if(username) {
+        this.$axios.$post("/api/projects", {
+          clientUsername: username.username,
           designerUsername: this.designerUsername,
           title: this.title,
           description: this.description,
@@ -51,7 +63,18 @@ export default {
         .then(response => {
           this.$router.push(`/project/${response.id}`);
         });
+      }
+
     },
+    searchClients() {
+      if(this.clientSearch.length > 0) {
+        this.$axios.$get(`/api/clients/search/${this.clientSearch}`).then(r => {
+          this.clientsSearch = r;
+        })
+      } else {
+        this.clientsSearch = [];
+      }
+    }
   }
 }
 </script>

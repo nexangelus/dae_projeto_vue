@@ -7,8 +7,9 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item href="/project/create" v-if="$auth.user && $auth.user.groups.includes('Designer')">Create Project</b-nav-item>
-          <b-nav-item href="#" disabled>Disabled</b-nav-item>
+          <b-nav-item-dropdown text="Project" v-if="$auth.user && $auth.user.groups.includes('Designer')">
+            <b-dropdown-item :to="{name: 'project-create'}">Create</b-dropdown-item>
+          </b-nav-item-dropdown>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
