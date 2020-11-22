@@ -7,7 +7,7 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item href="/project/create">Create Project</b-nav-item>
+          <b-nav-item href="/project/create" v-if="$auth.user && $auth.user.groups.includes('Designer')">Create Project</b-nav-item>
           <b-nav-item href="#" disabled>Disabled</b-nav-item>
         </b-navbar-nav>
 
@@ -61,6 +61,10 @@ html {
   background-color: #313334;
   color: white;
 }*/
+
+#main {
+  margin-top: 15px;
+}
 
 .button--green {
   display: inline-block;

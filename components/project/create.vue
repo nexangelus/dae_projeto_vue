@@ -1,26 +1,46 @@
 <template>
-  <form @submit.prevent="create">
-    <div>Client: <input v-model="clientUsername" type="text" /></div>
-    <div>Title: <input v-model="title" type="text" /></div>
-    <div>Description: <input v-model="description" type="text" /></div>
-    <nuxt-link to="/">Return</nuxt-link>
-    <button type="reset">RESET</button>
-    <button @click.prevent="create">CREATE</button>
-  </form>
+  <div class="container-fluid">
+    <b-breadcrumb :items="items"></b-breadcrumb>
+    <div class="jumbotron">
+      <h2>Create new Project</h2>
+    </div>
+    <form @submit.prevent="create">
+      <div class="form-group">
+        <label for="clientUsername">Client</label>
+        <input id="clientUsername" class="form-control" v-model="clientUsername" type="text"/></div>
+      <div class="form-group">
+        <label for="title">Project Title</label>
+        <input v-model="title" id="title" class="form-control" type="text"/></div>
+      <div class="form-group">
+        <label for="description">Project Description</label>
+        <textarea class="form-control" id="description" v-model="description" rows="3"></textarea>
+      </div>
+      <button type="reset" class="btn btn-danger">Clear</button>
+      <button @click.prevent="create" class="btn btn-primary">Create</button>
+    </form>
+  </div>
+
 </template>
 
 <script>
 export default {
-  data(){
-      return {
-          clientUsername: null,
-          designerUsername: this.$auth.user.sub,
-          title: null,
-          description: null,
-      }
+  data() {
+    return {
+      clientUsername: null,
+      designerUsername: this.$auth.user.sub,
+      title: null,
+      description: null,
+      items: [{
+        text: 'Projects',
+        href: '#'
+      }, {
+        text: 'Create',
+        active: true
+      }]
+    }
   },
   methods: {
-     create() {
+    create() {
       this.$axios
         .$post("/api/projects", {
           clientUsername: this.clientUsername,
@@ -31,7 +51,7 @@ export default {
         .then(response => {
           this.$router.push(`/project/${response.id}`);
         });
-    }, 
+    },
   }
 }
 </script>
