@@ -7,18 +7,21 @@
       <th>Designer</th>
       <th>Created Date</th>
       <th>Updated Date</th>
+      <th>Actions</th>
     </tr>
     <tr v-for="project of projects" :key="project.id">
-      <td><nuxt-link :to="`/project/${project.id}`">{{project.title}}</nuxt-link></td>
+      <td>{{project.title}}</td>
       <td>{{project.description}}</td>
       <td>{{project.clientUsername}}</td>
       <td>{{project.designerUsername}}</td>
       <td>{{$moment(project.created).format("DD/MM/YYYY HH:mm")}}</td>
       <td>{{project.updated ? $moment(project.updated).format("DD/MM/YYYY HH:mm") : ''}}</td>
+      <td>
+        <nuxt-link class="btn btn-link" :to="`/project/${project.id}`">Details</nuxt-link>
+      </td>
     </tr>
   </table>
 </template>
-
 <script>
 export default {
   props: ['projects']
