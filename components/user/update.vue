@@ -1,49 +1,96 @@
 <template>
-  <form @submit.prevent="create">
-    <div>Password: <input v-model="user.password" type="password" /></div>
-    <div>Name: <input v-model="user.name" type="text" /></div>
-    <div>Email: <input v-model="user.email" type="email" /></div>
-    <div v-if="$auth.user.groups.includes('Client') || $auth.user.groups.includes('Manufacturer')">
-        <div>Address <input v-model="user.address" type="text"/></div>
-        <div>Contact <input v-model="user.contact" type="text"/></div>
+  <div class="container-fluid">
+    <b-breadcrumb :items="items"></b-breadcrumb>
+    <div class="jumbotron">
+      <h2>Update Details</h2>
     </div>
-    
-    <nuxt-link to="/">Return</nuxt-link>
-    <button type="reset">RESET</button>
-    <button @click.prevent="update">UPDATE</button>
-  </form>
+    <form>
+      <form>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input v-model="user.name" type="text" class="form-control" id="name" aria-describedby="emailHelp">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input v-model="user.email" type="email" class="form-control" id="email">
+        </div>
+        <div class="form-group" v-if="type">
+          <label for="address">Address</label>
+          <input v-model="user.address" type="text" class="form-control" id="address">
+        </div>
+        <div class="form-group" v-if="type">
+          <label for="contact">Contact</label>
+          <input v-model="user.contact" type="text" class="form-control" id="contact">
+        </div>
+        <div class="group form-group">
+          <label><strong>Change Password</strong></label>
+          <div class="form-group">
+            <label for="oldPassword">Previous Password</label>
+            <input v-model="oldPassword" type="password" class="form-control" id="oldPassword">
+          </div>
+          <div class="form-group">
+            <label for="newPassword">New Password</label>
+            <input v-model="newPassword" type="password" class="form-control" id="newPassword">
+          </div>
+        </div>
+      </form>
+      <button type="reset" class="btn btn-danger">Clear</button>
+      <button @click.prevent="update" class="btn btn-primary">Update</button>
+    </form>
+  </div>
+
 </template>
 <script>
 export default {
   data() {
     return {
       user: [],
-      type: this.$auth.user.groups.includes('Client','Manufacturer'),
+      group: this.$auth.user.groups[0].toLowerCase(),
+      oldPassword: '',
+      newPassword: '',
+      type: this.$auth.user.groups.includes('Client') || this.$auth.user.groups.includes('Manufacturer'),
+      items: [{
+        text: 'Dashboard',
+        to: { name: 'dashboard' }
+      }, {
+        text: 'User Details',
+        href: `/${this.$auth.user.groups[0].toLowerCase()}/${this.$auth.user.sub}`
+      }, {
+        text: 'Edit',
+        active: true
+      }]
     };
   },
   mounted() {
-    this.$axios.$get(`/api/${this.$auth.user.groups[0].toLowerCase()}s/${this.$auth.user.sub}`).then((user) => {
+    this.$axios.$get(`/api/${this.group}s/${this.$auth.user.sub}`).then((user) => {
       this.user = user
     });
   },
   methods: {
     update() {
+      const data = { // TODO logic for old/new password in different fields
+        username: this.user.username,
+        password: this.user.password,
+        name: this.user.name,
+        email: this.user.email
+      }
+      if (this.type) {
+        data.address = this.user.address;
+        data.contact = this.user.contact;
+      }
       this.$axios
-        .$put(`/api/${this.$auth.user.groups[0].toLowerCase()}s/${this.$auth.user.sub}`, {
-          username: this.user.username,
-          password: this.user.password,
-          name: this.user.name,
-          email: this.user.email,
-          if (type) {
-              address: this.user.address;
-              contact: this.user.contact;
-          }
-        })
+        .$put(`/api/${this.group}s/${this.$auth.user.sub}`, data)
         .then(() => {
-            //TODO voltar para o profile
-          this.$router.push(`/${$auth.user.groups[0].toLowerCase()}/${$auth.user.sub}/`);
+          this.$router.push(`/${this.group}/${this.$auth.user.sub}/`);
         });
     },
   },
 };
 </script>
+<style>
+.group {
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  padding: 0.375rem 0.75rem;
+}
+</style>

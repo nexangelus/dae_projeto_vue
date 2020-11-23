@@ -29,7 +29,6 @@
 
 <script>
 export default {
-  name: 'project-create',
   data() {
     return {
       clientSearch: null,

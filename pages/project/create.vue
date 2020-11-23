@@ -8,6 +8,7 @@
 import Create from "@/components/project/create";
 export default {
   components: {Create},
+  name: 'project-create',
   data: function () {
     return {
       projects: null

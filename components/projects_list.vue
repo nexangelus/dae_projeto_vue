@@ -1,20 +1,20 @@
 <template>
   <table class="table table-striped">
     <tr>
-      <th>Título</th>
-      <th>Descrição</th>
-      <th>Cliente</th>
-      <th>Projetista</th>
-      <th>Data Criação</th>
-      <th>Data Atualização</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Client</th>
+      <th>Designer</th>
+      <th>Created Date</th>
+      <th>Updated Date</th>
     </tr>
     <tr v-for="project of projects" :key="project.id">
-      <td>{{project.title}}</td>
+      <td><nuxt-link :to="`/project/${project.id}`">{{project.title}}</nuxt-link></td>
       <td>{{project.description}}</td>
       <td>{{project.clientUsername}}</td>
       <td>{{project.designerUsername}}</td>
-      <td>{{project.created}}</td>
-      <td>{{project.updated}}</td>
+      <td>{{$moment(project.created).format("DD/MM/YYYY HH:mm")}}</td>
+      <td>{{project.updated ? $moment(project.updated).format("DD/MM/YYYY HH:mm") : ''}}</td>
     </tr>
   </table>
 </template>

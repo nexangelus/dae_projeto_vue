@@ -20,7 +20,7 @@ export default {
   components: {DashDesigner, DashAdmin, DashManufacturer, DashClient},
   data() {
     return {
-      userType: this.$auth.user.groups[0].toLowerCase(),
+      userType: this.$auth.user.groups ? this.$auth.user.groups[0].toLowerCase() : "",
       items: [{
         text: 'Dashboard',
         to: {name: 'dashboard'}

@@ -55,7 +55,10 @@ export default {
         // Admin, Client, Designer, Manufacturer
         const groups = this.$auth.user.groups;
         const username = this.$auth.user.sub;
-        if (groups.includes('Admin')) {
+        if(groups.length >= 1) {
+          this.$router.push("/dashboard");
+        }
+        /*if (groups.includes('Admin')) {
           this.$router.push('/admin')
         } else if (groups.includes('Client')) {
           this.$router.push(`/client/${username}`)
@@ -63,7 +66,7 @@ export default {
           this.$router.push(`/designer/${username}`)
         } else if (groups.includes('Manufacturer')) {
           this.$router.push(`/manufacturer/${username}`)
-        }
+        }*/
       })
       promise.catch(() => {
         this.$toast.error('Sorry, you cannot login. Ensure your credentials are correct').goAway(1500)

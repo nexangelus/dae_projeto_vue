@@ -34,7 +34,8 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/toast',
-    '@nuxtjs/auth'
+    '@nuxtjs/auth',
+    '@nuxtjs/moment'
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
@@ -58,7 +59,8 @@ export default {
   auth: {
     redirect: {
       login: '/',
-      logout: '/'
+      logout: '/',
+      home: '/dashboard'
     },
     watchLoggedIn: true,
     strategies: {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand href="#">DAE</b-navbar-brand>
+      <b-navbar-brand :to="{name:'dashboard'}">DAE</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -17,7 +17,7 @@
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
             <template #button-content v-if="$auth.user"> {{$auth.user.sub}} </template>
-            <b-dropdown-item :to="`/${$auth.user.groups[0].toLowerCase()}/${$auth.user.sub}/`">Profile</b-dropdown-item>
+            <b-dropdown-item v-if="$auth.user" :to="`/${group}/${$auth.user.sub}/`">Profile</b-dropdown-item>
             <b-dropdown-item @click.prevent="signOut">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
@@ -30,6 +30,11 @@
 </template>
 <script>
 export default {
+  data() {
+    return {
+      group: this.$auth.user ? this.$auth.user.groups[0].toLowerCase() : ""
+    }
+  },
   methods: {
     signOut() {
       this.$auth.logout();
@@ -65,6 +70,7 @@ html {
 
 #main {
   margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .button--green {
