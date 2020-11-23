@@ -14,6 +14,14 @@
         <th scope="row">Email</th>
         <td>{{ user.email }}</td>
       </tr>
+      <tr v-if="user.address">
+        <th scope="row">Address</th>
+        <td>{{ user.address }}</td>
+      </tr>
+      <tr v-if="user.contact">
+        <th scope="row">Contact</th>
+        <td>{{ user.contact }}</td>
+      </tr>
       <tr>
         <th scope="row">Created</th>
         <td>{{ $moment(user.created).format("DD/MM/YYYY") }}</td>
