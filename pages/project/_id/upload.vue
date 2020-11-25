@@ -34,15 +34,24 @@ export default {
       return formData
     },
     upload() {
+      let ok = true
       if (!this.hasFile) {
         return;
       }
       this.file.forEach((element) => {
-        this.$axios.$post(`/api/projects/${this.idProject}/upload`, this.formData(element),{
+        this.$axios.post(`/api/projects/${this.idProject}/upload`, this.formData(element),{
             headers: {"Content-Type": "multipart/form-data",},
           }
-        );
+        ).then((response) =>{
+          if(response.status ==200){
+            this.$toast.success(response.data).goAway(4000)
+          }else{
+            this.$toast.danger(response.data).goAway(4000)
+            ok = false
+          }
+        });
       });
+      this.$router.go(-1) 
     },
   },
 };
