@@ -1,12 +1,15 @@
 <template>
   <form @submit.prevent="upload">
     <b-form-file
+      multiple
       v-model="file"
       :state="hasFile"
       placeholder="Choose a file or drop it here..."
       drop-placeholder="Drop file here..."
     ></b-form-file>
-    <div class="mt-3">Selected file: {{ file ? file.name : "" }}</div>
+    <div class="mt-3" v-for="fil of file" :key="key">
+      Selected file: {{ fil ? fil.name : "" }}
+    </div>
     <b-button type="submit" :disabled="!hasFile">Upload</b-button>
   </form>
 </template>
@@ -16,30 +19,29 @@ export default {
   data() {
     return {
       file: null,
-      idProject: this.$route.params.id
+      idProject: this.$route.params.id,
     };
   },
   computed: {
     hasFile() {
       return this.file != null;
     },
-    formData() {
-      let formData = new FormData();
-      if (this.file) {
-        formData.append("file", this.file)
-      }
-      return formData;
-    },
   },
   methods: {
+    formData(ele){
+      let formData = new FormData();
+      formData.append("file", ele)
+      return formData
+    },
     upload() {
       if (!this.hasFile) {
         return;
       }
-      this.$axios.$post(`/api/projects/${this.idProject}/upload`, this.formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      this.file.forEach((element) => {
+        this.$axios.$post(`/api/projects/${this.idProject}/upload`, this.formData(element),{
+            headers: {"Content-Type": "multipart/form-data",},
+          }
+        );
       });
     },
   },
