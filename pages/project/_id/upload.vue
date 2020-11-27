@@ -1,5 +1,10 @@
 <template>
-  <form @submit.prevent="upload">
+  <div class="container-fluid">
+    <b-breadcrumb :items="items"></b-breadcrumb>
+    <div class="jumbotron">
+      <h2>Upload Files</h2>
+    </div>
+    <form @submit.prevent="upload">
     <b-form-file
       multiple
       v-model="file"
@@ -12,6 +17,7 @@
     </div>
     <b-button type="submit" :disabled="!hasFile">Upload</b-button>
   </form>
+  </div>
 </template>
 <script>
 export default {
@@ -20,6 +26,16 @@ export default {
     return {
       file: null,
       idProject: this.$route.params.id,
+      items: [{
+        text: 'Dashboard',
+        to: { name: 'dashboard' }
+      }, {
+        text: 'Project',
+        to: `/project/${this.$route.params.id}`
+      }, {
+        text: 'Upload Files',
+        active: true
+      }]
     };
   },
   computed: {
@@ -51,7 +67,7 @@ export default {
           }
         });
       });
-      this.$router.go(-1) 
+      this.$router.push(`/project/${this.$route.params.id}`) 
     },
   },
 };

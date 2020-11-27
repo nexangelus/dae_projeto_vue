@@ -13,6 +13,7 @@
 
 <script>
 export default {
+  name: "project-details",
   data: function () {
     return {
       project: {}
