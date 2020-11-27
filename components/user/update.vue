@@ -33,9 +33,9 @@
             <input v-model="newPassword" type="password" class="form-control" id="newPassword">
           </div>
         </div>
+        <button @click.prevent="cancel" class="btn btn-danger">Cancel</button>
+        <button @click.prevent="update" class="btn btn-primary">Update</button>
       </form>
-      <button type="reset" class="btn btn-danger">Clear</button>
-      <button @click.prevent="update" class="btn btn-primary">Update</button>
     </form>
   </div>
 
@@ -54,7 +54,7 @@ export default {
         to: { name: 'dashboard' }
       }, {
         text: 'User Details',
-        href: `/${this.$auth.user.groups[0].toLowerCase()}/${this.$auth.user.sub}`
+        to: `/${this.$auth.user.groups[0].toLowerCase()}/${this.$auth.user.sub}`
       }, {
         text: 'Edit',
         active: true
@@ -68,9 +68,10 @@ export default {
   },
   methods: {
     update() {
-      const data = { // TODO logic for old/new password in different fields
+      const data = {
         username: this.user.username,
-        password: this.user.password,
+        newPassword: this.newPassword,
+        oldPassword: this.oldPassword,
         name: this.user.name,
         email: this.user.email
       }
@@ -84,6 +85,9 @@ export default {
           this.$router.push(`/${this.group}/${this.$auth.user.sub}/`);
         });
     },
+    cancel() {
+      this.$router.push(`/${this.group}/${this.$auth.user.sub}/`)
+    }
   },
 };
 </script>

@@ -34,8 +34,8 @@
       </tbody>
     </table>
     <nuxt-link class="btn btn-primary" :to="`/project/${project.id}/update/`">Update Project Details</nuxt-link>
-    <nuxt-link class="btn btn-primary" :to="`/project/${project.id}/upload`" v-if="$auth.user.groups.includes('Client')">UPLOAD PHOTOS</nuxt-link>
-    <nuxt-link class="btn btn-primary" :to="`/project/${project.id}/upload`" v-if="$auth.user.groups.includes('Designer')">Simulate</nuxt-link>
+    <nuxt-link class="btn btn-primary" :to="`/project/${project.id}/upload`" v-if="$auth.user.groups.includes('Client')">Upload Photos</nuxt-link>
+    <nuxt-link class="btn btn-primary" :to="`/project/${project.id}/upload`" v-if="$auth.user.groups.includes('Designer')">Simulation</nuxt-link>
   </div>
 </template>
 
