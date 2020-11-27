@@ -24,11 +24,11 @@
       </tr>
       <tr>
         <th scope="row">Created</th>
-        <td>{{ $moment(user.created).format("DD/MM/YYYY") }}</td>
+        <td>{{ $moment(user.created).format("L LT") }}</td>
       </tr>
       <tr v-if="user.updated">
         <th scope="row">Updated</th>
-        <td>{{ $moment(user.updated).format("DD/MM/YYYY") }}</td>
+        <td>{{ $moment(user.updated).format("L LT") }}</td>
       </tr>
       </tbody>
     </table>
