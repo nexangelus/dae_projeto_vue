@@ -14,14 +14,14 @@
       <td>{{project.description}}</td>
       <td>{{project.clientUsername}}</td>
       <td>{{project.designerUsername}}</td>
-      <td>{{$moment(project.created).format("DD/MM/YYYY HH:mm")}}</td>
-      <td>{{project.updated ? $moment(project.updated).format("DD/MM/YYYY HH:mm") : ''}}</td>
+      <td>{{$moment(project.created).format('L LT')}}</td>
+      <td>{{project.updated ? $moment(project.updated).format("L LT") : ''}}</td>
       <td>
-        <nuxt-link class="btn btn-link" :to="`/project/${project.id}`">Details</nuxt-link>
+        <nuxt-link class="btn btn-primary" :to="`/project/${project.id}`"><fa :icon="['fas', 'info']" /></nuxt-link>
       </td>
     </tr>
   </table>
-</template>
+</template>.
 <script>
 export default {
   props: ['projects']

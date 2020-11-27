@@ -27,6 +27,7 @@ export default {
   buildModules: [
   ],
 
+  // TODO ASK buildModules/modules
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     // https://go.nuxtjs.dev/bootstrap
@@ -35,8 +36,23 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/toast',
     '@nuxtjs/auth',
-    '@nuxtjs/moment'
+    '@nuxtjs/moment',
+    ['nuxt-fontawesome', {
+      component: 'fa',
+      imports: [
+        {
+          set: '@fortawesome/free-solid-svg-icons',
+          icons: ['fas']
+        },
+      ]
+    }],
   ],
+
+  moment: {
+    locales: ['pt'],
+    defaultLocale: 'pt',
+    defaultFormat: "L LT"
+  },
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
