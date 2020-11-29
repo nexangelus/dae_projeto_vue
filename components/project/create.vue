@@ -4,8 +4,8 @@
     <div class="jumbotron">
       <h2>Create new Project</h2>
     </div>
-    <form @submit.prevent="create">
-      <div class="form-group">
+    <form>
+      <div v-if="!this.route" class="form-group">
         <label for="clientUsername">Client</label>
         <input id="clientUsername" class="form-control" list="clients" v-model="clientSearch" @keyup="searchClients">
         <datalist id="clients">
@@ -21,10 +21,12 @@
         <textarea class="form-control" id="description" v-model="description" rows="3"></textarea>
       </div>
       <button type="reset" class="btn btn-danger">Clear</button>
-      <button @click.prevent="create" class="btn btn-primary">Create</button>
+      <button @click.prevent="choise" class="btn btn-primary">
+        <p v-if="!this.route" style="margin-bottom: 0rem;">Create</p>
+        <p v-else style="margin-bottom: 0rem;">Update</p>
+        </button>
     </form>
   </div>
-
 </template>
 
 <script>
@@ -49,7 +51,34 @@ export default {
       }]
     }
   },
+  computed: {
+    id () {
+      return this.$route.params.id
+    },
+    route(){
+      return (this.$route.name == "project-id-update")? true : false 
+    }
+  },
+  mounted() {
+    if(this.route){
+        this.$axios.$get(`/api/projects/${this.id}`).then((response) => {
+          this.title = response.title
+          this.description = response.description
+          this.clientSearch = response.clientUsername
+      })
+    }
+  },
   methods: {
+    choise(){
+      console.log(1)
+      if(this.route){
+        console.log(2)
+        this.update()
+      }else{
+        this.create()
+        
+      }
+    },
     create() {
       let username = this.clientsSearch.find(x => x.name == this.clientSearch)
       if(username) {
@@ -64,6 +93,17 @@ export default {
         });
       }
 
+    },
+    update() {
+      let username = this.clientsSearch.find(x => x.name == this.clientSearch)     
+        this.$axios.$put(`/api/projects/${this.id}`, {
+          designerUsername: this.designerUsername,
+          title: this.title,
+          description: this.description,
+        })
+        .then(response => {
+          this.$router.push(`/project/${this.id}`);
+        });
     },
     searchClients() {
       if(this.clientSearch.length > 0) {
