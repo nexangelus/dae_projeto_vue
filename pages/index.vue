@@ -3,7 +3,7 @@
     <div>
       <Logo />
       <h1 class="title">projeto</h1>
-      <div class="container" style="min-height: 0">
+      <div class="container-fluid" style="min-height: 0">
         <div class="col-md-12 col-sm-12">
           <div class="login-form">
             <form>
@@ -28,6 +28,20 @@
               <button @click.prevent="login" class="btn btn-secondary">Login</button>
             </form>
           </div>
+          <br>
+          <p><a class="btn btn-outline-secondary btn-sm" @click="log('admin', 'admin')"> LOGIN: Admin</a></p>
+          <p>
+            <a class="btn btn-outline-secondary btn-sm" @click="log('manu', 'manu')"> LOGIN: Manufacturer 1</a>
+            <a class="btn btn-outline-secondary btn-sm" @click="log('fernando78', 'EO8qP4ATEA')"> LOGIN: Manufacturer 2</a>
+          </p>
+          <p>
+            <a class="btn btn-outline-secondary btn-sm" @click="log('client', 'client')"> LOGIN: Client 1</a>
+            <a class="btn btn-outline-secondary btn-sm" @click="log('neves.nelson', 'XJQAioWQjV')"> LOGIN: Client 2</a>
+          </p>
+          <p>
+            <a class="btn btn-outline-secondary btn-sm" @click="log('designer', 'designer')"> LOGIN: Designer 1</a>
+            <a class="btn btn-outline-secondary btn-sm" @click="log('bpinto', 'icLMoqJM99')"> LOGIN: Designer 2</a>
+          </p>
         </div>
       </div>
     </div>
@@ -72,6 +86,11 @@ export default {
         this.$toast.error('Sorry, you cannot login. Ensure your credentials are correct').goAway(1500)
       })
     },
+    log(username, password) {
+      this.username = username;
+      this.password = password;
+      this.login();
+    }
   },
 };
 </script>
