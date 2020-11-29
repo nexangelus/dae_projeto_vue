@@ -10,6 +10,10 @@
           <b-nav-item-dropdown text="Project" v-if="$auth.user && $auth.user.groups.includes('Designer')">
             <b-dropdown-item :to="{name: 'project-create'}">Create</b-dropdown-item>
           </b-nav-item-dropdown>
+          <b-nav-item-dropdown text="Products Families" v-if="$auth.user && $auth.user.groups.includes('Manufacturer')">
+            <b-dropdown-item :to="{name: 'family'}">List</b-dropdown-item>
+            <b-dropdown-item :to="{name: 'family-create'}">Create</b-dropdown-item>
+          </b-nav-item-dropdown>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->

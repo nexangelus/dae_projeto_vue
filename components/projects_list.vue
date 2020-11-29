@@ -21,7 +21,7 @@
       </td>
     </tr>
   </table>
-</template>.
+</template>
 <script>
 export default {
   props: ['projects']
