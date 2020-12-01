@@ -5,7 +5,7 @@
       <h2>Create new Project</h2>
     </div>
     <form>
-      <div v-if="!this.route" class="form-group">
+      <div v-if="!this.isUpdate" class="form-group">
         <label for="clientUsername">Client</label>
         <input id="clientUsername" class="form-control" list="clients" v-model="clientSearch" @keyup="searchClients">
         <datalist id="clients">
@@ -22,7 +22,7 @@
       </div>
       <button type="reset" class="btn btn-danger">Clear</button>
       <button @click.prevent="choise" class="btn btn-primary">
-        <p v-if="!this.route" style="margin-bottom: 0rem;">Create</p>
+        <p v-if="!this.isUpdate" style="margin-bottom: 0rem;">Create</p>
         <p v-else style="margin-bottom: 0rem;">Update</p>
         </button>
     </form>
@@ -55,12 +55,12 @@ export default {
     id () {
       return this.$route.params.id
     },
-    route(){
+    isUpdate(){
       return (this.$route.name == "project-id-update")? true : false 
     }
   },
   mounted() {
-    if(this.route){
+    if(this.isUpdate){
         this.$axios.$get(`/api/projects/${this.id}`).then((response) => {
           this.title = response.title
           this.description = response.description
@@ -70,13 +70,10 @@ export default {
   },
   methods: {
     choise(){
-      console.log(1)
-      if(this.route){
-        console.log(2)
+      if(this.isUpdate){
         this.update()
       }else{
         this.create()
-        
       }
     },
     create() {
