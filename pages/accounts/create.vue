@@ -25,6 +25,7 @@
 
 <script>
 export default {
+  name: 'accounts-create',
   data() {
     return {
       email: null,
@@ -45,7 +46,7 @@ export default {
           group: this.group,
         })
         .then(response => {
-            this.$toast.success("Email Sent")
+            this.$toast.success("Email Sent").goAway(2000)
         });
 
     },

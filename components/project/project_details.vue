@@ -1,5 +1,4 @@
 <template>
-
   <div class="container-fluid">
     <b-breadcrumb :items="items"></b-breadcrumb>
     <div class="jumbotron">

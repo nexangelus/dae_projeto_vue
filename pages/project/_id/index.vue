@@ -1,5 +1,4 @@
 <template>
-
   <div class="container-fluid">
     <b-breadcrumb :items="items"></b-breadcrumb>
     <div class="jumbotron">
@@ -35,6 +34,27 @@
     </table>
     <nuxt-link class="btn btn-primary" :to="`/project/${project.id}/update/`">Update Project Details</nuxt-link>
     <nuxt-link class="btn btn-primary" :to="`/project/${project.id}/structure/simulate`" v-if="$auth.user.groups.includes('Designer')">Simulate</nuxt-link>
+    <p/>
+    <div class="jumbotron" style="padding: 2rem;">
+      <h3>Uploads</h3>
+    </div>
+    <table class="table table-striped">
+      <tbody>
+        <tr>
+          <th>File Name</th>
+          <th>Action</th>
+        </tr>
+        <tr v-for="upload of project.uploadDTOS" :key="upload.id">
+          <td>{{upload.filename}}</td>
+          <td>
+            //Download
+            //Apagar
+            <nuxt-link class="btn btn-primary" :to="`/project/${project.id}`"><fa :icon="['fas', 'info']" /></nuxt-link>
+            <nuxt-link v-if="$auth.user.groups.includes('Client')" class="btn btn-primary" :to="`/project/${project.id}`"><fa :icon="['fas', 'info']" /></nuxt-link>
+          </td>
+        </tr>
+      </tbody>
+    </table>
     <nuxt-link class="btn btn-primary" :to="`/project/${project.id}/upload`" v-if="$auth.user.groups.includes('Client')">Upload Photos</nuxt-link>
   </div>
 </template>

@@ -14,6 +14,9 @@
             <b-dropdown-item :to="{name: 'family'}">List</b-dropdown-item>
             <b-dropdown-item :to="{name: 'family-create'}">Create</b-dropdown-item>
           </b-nav-item-dropdown>
+          <b-nav-item-dropdown text="Account" v-if="$auth.user && $auth.user.groups.includes('Designer')">
+            <b-dropdown-item :to="{name: 'accounts-create'}">Create</b-dropdown-item>
+          </b-nav-item-dropdown>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
