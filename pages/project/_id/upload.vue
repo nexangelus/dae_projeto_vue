@@ -51,6 +51,8 @@ export default {
     },
     upload() {
       let ok = true
+      let count = this.file.length
+      let starter = 0
       if (!this.hasFile) {
         return;
       }
@@ -60,14 +62,17 @@ export default {
           }
         ).then((response) =>{
           if(response.status ==200){
-            this.$toast.success(response.data).goAway(4000)
+            this.$toast.success(response.data).goAway(4000)           
           }else{
             this.$toast.danger(response.data).goAway(4000)
             ok = false
           }
+          starter++
+          if(count == starter && ok){
+            this.$router.push(`/project/${this.$route.params.id}`)
+          }
         });
       });
-      this.$router.push(`/project/${this.$route.params.id}`)
     },
   },
 };

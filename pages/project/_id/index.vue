@@ -47,10 +47,8 @@
         <tr v-for="upload of project.uploadDTOS" :key="upload.id">
           <td>{{upload.filename}}</td>
           <td>
-            //Download
-            //Apagar
-            <nuxt-link class="btn btn-primary" :to="`/project/${project.id}`"><fa :icon="['fas', 'info']" /></nuxt-link>
-            <nuxt-link v-if="$auth.user.groups.includes('Client')" class="btn btn-primary" :to="`/project/${project.id}`"><fa :icon="['fas', 'info']" /></nuxt-link>
+            <button class="btn btn-primary" v-on:click="download(upload.id, upload.filename)"><fa :icon="['fas', 'download']" /></button>
+            <button class="btn btn-danger" v-on:click="trash(upload.id)"><fa :icon="['fas', 'trash']" /></button>
           </td>
         </tr>
       </tbody>
@@ -84,6 +82,28 @@ export default {
     this.$axios.$get(`/api/projects/${this.id}`).then((response) => {
       this.project = response
     })
+  },
+  methods: {
+    download(toId, name){
+      this.$axios.$get(`/api/projects/${this.id}/download/${toId}`, { responseType: "arraybuffer" }).then((file) => {
+          const url = window.URL.createObjectURL(new Blob([file]));
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", name);
+          document.body.appendChild(link);
+          link.click();
+        });
+    },
+    trash(toId){
+      this.$axios.delete(`/api/projects/${this.id}/delete/${toId}`).then((response) => {
+        if(response.status ==202){
+          this.$toast.success('File Deleted').goAway(2000)
+          location.reload()
+        }else {
+          this.$toast.error('Something went wrong').goAway(2000)
+        }
+      })
+    }
   }
 }
 </script>
