@@ -17,6 +17,9 @@
           <b-nav-item-dropdown text="Account" v-if="$auth.user && $auth.user.groups.includes('Designer')">
             <b-dropdown-item :to="{name: 'accounts-create'}">Create</b-dropdown-item>
           </b-nav-item-dropdown>
+          <b-nav-item-dropdown text="Product" v-if="$auth.user && $auth.user.groups.includes('Manufacturer')">
+            <b-dropdown-item :to="{name: 'manufacturer-upload'}">Import from Excel</b-dropdown-item>
+          </b-nav-item-dropdown>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
