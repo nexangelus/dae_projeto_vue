@@ -54,6 +54,26 @@
       </tbody>
     </table>
     <nuxt-link class="btn btn-primary" :to="`/project/${project.id}/upload`" v-if="$auth.user.groups.includes('Client')">Upload Photos</nuxt-link>
+    <p/>
+    <div class="jumbotron" style="padding: 2rem;">
+      <h3>Structures</h3>
+    </div>
+    <table class="table table-striped">
+      <tbody>
+        <tr>
+          <th>File Name</th>
+          <th>Action</th>
+        </tr>
+        <tr v-for="struct of project.structureDTOS" :key="upload.id">
+          <td>{{upload.filename}}</td>
+          <td>
+            <button class="btn btn-primary" v-on:click="download(upload.id, upload.filename)"><fa :icon="['fas', 'download']" /></button>
+            <button class="btn btn-danger" v-on:click="trash(upload.id)"><fa :icon="['fas', 'trash']" /></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <nuxt-link class="btn btn-primary" :to="`/project/${project.id}/structure/create`" v-if="$auth.user.groups.includes('Designer')">Create Struture</nuxt-link>
   </div>
 </template>
 
