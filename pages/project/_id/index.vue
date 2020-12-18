@@ -60,14 +60,18 @@
     <table class="table table-striped">
       <tbody>
         <tr>
-          <th>File Name</th>
+          <th>Name</th>
+          <th v-if="$auth.user.groups.includes('Designer')">Visible to Client</th>
+          <th>Client Accepted</th>
           <th>Action</th>
         </tr>
-        <!--<tr v-for="struct of project.structureDTOS" :key="upload.id">
-          <td>{{upload.filename}}</td>
+        <tr v-for="struct of project.structureDTOS" :key="struct.id">
+          <td>{{struct.name}}</td>
+          <td v-if="$auth.user.groups.includes('Designer')">{{struct.visibleToClient}}</td>
+          <td>{{struct.clientAccepted}}</td>
           <td>
-            <button class="btn btn-primary" v-on:click="download(upload.id, upload.filename)"><fa :icon="['fas', 'download']" /></button>
-            <button class="btn btn-danger" v-on:click="trash(upload.id)"><fa :icon="['fas', 'trash']" /></button>
+            <button class="btn btn-primary" :to="`/project/${project.id}/structure/create`"><fa :icon="['fas', 'download']" /></button>
+            <button v-if="$auth.user.groups.includes('Designer')" class="btn btn-success" v-on:click="showClient(struct.id)"><fa :icon="['fas', 'info']" /></button>
           </td>
         </tr>-->
       </tbody>
@@ -112,6 +116,26 @@ export default {
           document.body.appendChild(link);
           link.click();
         });
+    },
+    trash(toId){
+      this.$axios.delete(`/api/projects/${this.id}/delete/${toId}`).then((response) => {
+        if(response.status ==202){
+          this.$toast.success('File Deleted').goAway(2000)
+          location.reload()
+        }else {
+          this.$toast.error('Something went wrong').goAway(2000)
+        }
+      })
+    },
+    showClient(toId){
+      this.$axios.patch(`/api/projects/${this.id}/structures/${toId}/visibletoclient`).then((response) => {
+        if(response.status == 200){
+          this.$toast.success('File Deleted').goAway(2000)
+          location.reload()
+        }else {
+          this.$toast.error('Something went wrong').goAway(2000)
+        }
+      })
     }
   }
 }
