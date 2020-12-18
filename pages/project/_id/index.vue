@@ -48,7 +48,6 @@
           <td>{{upload.filename}}</td>
           <td>
             <button class="btn btn-primary" v-on:click="download(upload.id, upload.filename)"><fa :icon="['fas', 'download']" /></button>
-            <button class="btn btn-danger" v-on:click="trash(upload.id)"><fa :icon="['fas', 'trash']" /></button>
           </td>
         </tr>
       </tbody>
@@ -64,13 +63,13 @@
           <th>File Name</th>
           <th>Action</th>
         </tr>
-        <tr v-for="struct of project.structureDTOS" :key="upload.id">
+        <!--<tr v-for="struct of project.structureDTOS" :key="upload.id">
           <td>{{upload.filename}}</td>
           <td>
             <button class="btn btn-primary" v-on:click="download(upload.id, upload.filename)"><fa :icon="['fas', 'download']" /></button>
             <button class="btn btn-danger" v-on:click="trash(upload.id)"><fa :icon="['fas', 'trash']" /></button>
           </td>
-        </tr>
+        </tr>-->
       </tbody>
     </table>
     <nuxt-link class="btn btn-primary" :to="`/project/${project.id}/structure/create`" v-if="$auth.user.groups.includes('Designer')">Create Struture</nuxt-link>
@@ -113,16 +112,6 @@ export default {
           document.body.appendChild(link);
           link.click();
         });
-    },
-    trash(toId){
-      this.$axios.delete(`/api/projects/${this.id}/delete/${toId}`).then((response) => {
-        if(response.status ==202){
-          this.$toast.success('File Deleted').goAway(2000)
-          location.reload()
-        }else {
-          this.$toast.error('Something went wrong').goAway(2000)
-        }
-      })
     }
   }
 }

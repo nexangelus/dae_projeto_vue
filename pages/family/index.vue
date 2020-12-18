@@ -22,7 +22,6 @@
         <td>{{family.updated ? $moment(family.updated).format("L LT") : ''}}</td>
         <td>
           <nuxt-link class="btn btn-primary" :to="`/family/${family.id}`"><fa :icon="['fa', 'info-circle']" /></nuxt-link>
-          <a class="btn btn-danger" v-if="family.manufacturerUsername === manufacturerUsername" @click="remove(family.id)"><fa :icon="['fas', 'trash']" /></a>
         </td>
       </tr>
     </table>

@@ -22,7 +22,7 @@
         </tr>
         <tr>
           <th scope="row">Weff Negative</th>
-          <td>{{ material.profile.weff_p }}</td>
+          <td>{{ material.profile.weff_n }}</td>
         </tr>
         <tr>
           <th scope="row">Ar</th>

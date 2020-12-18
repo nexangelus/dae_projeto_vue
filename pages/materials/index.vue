@@ -41,7 +41,7 @@
     </div>
   </div>
 </template>
-<script>
+<script> // TODO move import Excel file from manufacturers to this file instead of different file, also remove from navbar
 export default {
   name: "family", // ignored because the name is forced as the folder name
   data: function () {

@@ -111,10 +111,6 @@ export default {
           this.$toast.error("An error occurred. Try Again").goAway(2000)
         })
 
-
-
-
-         // TODO UPDATE
       } else { // create a new material
         if(this.material.type === "Profile") {
           this.material.profile.mcr_p = JSON.parse(JSON.stringify(this.$refs.mcr_p.mcr))
