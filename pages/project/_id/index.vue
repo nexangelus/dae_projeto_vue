@@ -64,17 +64,17 @@
       <tbody v-if="$auth.user.groups.includes('Designer')">
         <tr>
           <th>Name</th>
-          <th v-if="$auth.user.groups.includes('Designer')">Visible to Client</th>
+          <th>Visible to Client</th>
           <th>Client Accepted</th>
-          <th>Action</th> TODO TABLE
+          <th>Action</th>
         </tr>
         <tr v-for="struct of project.structureDTOS" :key="struct.id" >
             <td>{{struct.name}}</td>
-            <td v-if="$auth.user.groups.includes('Designer')">{{struct.visibleToClient}}</td>
+            <td>{{struct.visibleToClient}}</td>
             <td>{{struct.clientAccepted}}</td>
             <td>
               <nuxt-link class="btn btn-primary" :to="`/project/${project.id}/structure/${struct.id}`"><fa :icon="['fas', 'asterisk']" /></nuxt-link>
-              <button v-if="$auth.user.groups.includes('Designer')" class="btn btn-success" v-on:click="showClient(struct.id)"><fa :icon="['fas', 'info']" /></button>
+              <button class="btn btn-success" v-on:click="showClient(struct.id)"><fa :icon="['fas', 'info']" /></button>
             </td>
         </tr>
       </tbody>
@@ -89,7 +89,6 @@
             <td>{{struct.clientAccepted}}</td>
             <td>
               <nuxt-link class="btn btn-primary" :to="`/project/${project.id}/structure/${struct.id}`"><fa :icon="['fas', 'asterisk']" /></nuxt-link>
-              <button v-if="$auth.user.groups.includes('Designer')" class="btn btn-success" v-on:click="showClient(struct.id)"><fa :icon="['fas', 'info']" /></button>
             </td>
         </tr>
       </tbody>
