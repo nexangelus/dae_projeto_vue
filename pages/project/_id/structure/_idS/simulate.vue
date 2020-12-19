@@ -28,7 +28,7 @@
               <fa :icon="['fa', 'times-circle']" v-if="simulate.item.simulated == false"/>
             </template>
             <template #cell(selected)="selected">
-              <b-checkbox v-model="selected.item.selected"/>
+              <b-checkbox v-model="selected.item.selected"  @change="deciderSecound(selected.item.id, $event)"/>
             </template>
           </b-table>
         </b-card-body>
@@ -57,13 +57,13 @@
               </a>
             </template>
             <template #cell(selected)="selected">
-              <b-checkbox v-model="selected.item.selected"/>
+              <b-checkbox v-model="selected.item.selected" @change="deciderSecound(selected.item.id, $event)"/>
             </template>
           </b-table>
         </b-card-body>
       </b-card>
     </div>
-    <button class="btn btn-primary" v-on:click="save()">Save</button>
+    <button class="btn btn-primary">Finish</button>
   </div>
 </template>
 <script>
@@ -129,6 +129,8 @@ export default {
           filter: null
         }
       },
+      structure: [],
+      material: {}
     };
   },
   computed: {
@@ -140,7 +142,10 @@ export default {
     }
   },
   mounted() {
-    this.$axios.$get(`/api/materials/`)
+    this.$axios.$get(`/api/projects/${this.id}/structures/${this.idS}`).then((response) => {
+        this.structure = response
+        this.material = response.materials.map(m=>m.id)
+        this.$axios.$get(`/api/materials/`)
       .then((materials) => {
         for (const material of materials) {
           if (material.profile) {
@@ -155,7 +160,7 @@ export default {
               updated: material.updated,
               manufacturerUsername: material.manufacturerUsername,
               simulated: null,
-              selected: false
+              selected: this.deciderFirst(material.id)
             });
           } else if (material.sheet) {
             this.sheets.push({
@@ -166,35 +171,41 @@ export default {
               created: material.created,
               updated: material.updated,
               manufacturerUsername: material.manufacturerUsername,
-              selected: false
+              selected: this.deciderFirst(material.id)
             });
           }
         }
-      });
+      })
+      })  
   },
   methods: {
-    save() {
-      let materialP = this.profiles.filter(p => p.selected == true)
-      let materialS = this.sheets.filter(p => p.selected == true)
-      if (materialP != null) {
-        this.$axios.post(`/api/projects/${this.id}/structures/${this.idS}/material`, materialP).then((response) => {
+    deciderFirst(id) {
+        return this.material.includes(id)
+    },
+    deciderSecound(id, event){
+        if(event){
+          this.save(id)
+        }else {
+          this.remove(id)
+        }
+    },
+    save(id) {
+      this.$axios.post(`/api/projects/${this.id}/structures/${this.idS}/material/${id}`).then((response) => {
           if (response.status == 200) {
             this.$toast.success(response.data).goAway(4000)
           } else {
             this.$toast.danger(response.data).goAway(4000)
           }
         });
-      }
-      if (materialS != null) {
-        this.$axios.post(`/api/projects/${this.id}/structures/${this.idS}/material`, materialS).then((response) => {
+    },
+    remove(id) {
+      this.$axios.delete(`/api/projects/${this.id}/structures/${this.idS}/material/${id}`).then((response) => {
           if (response.status == 200) {
             this.$toast.success(response.data).goAway(4000)
           } else {
             this.$toast.danger(response.data).goAway(4000)
           }
         });
-      }
-
     },
     simulate(materialId) {
       let material = this.profiles.find(p => p.id == materialId)
