@@ -1,7 +1,13 @@
 <template>
   <div class="container-fluid">
-    <h1>Olá {{manufacturer.name}}</h1>
+    <h1>Olá {{ manufacturer.name }}</h1>
+    <p></p>
+    <div class="jumbotron">
+      <h2>Structures with my materials</h2>
+    </div>
+    <b-table striped hover :items="structures" :fields="structuresFields">
 
+    </b-table>
   </div>
 </template>
 
@@ -13,10 +19,28 @@ export default {
       families: [],
       materials: [],
       manufacturer: {},
+      structures: [],
+      structuresFields: [
+        {
+          key: 'name',
+          label: 'Name'
+        }, {
+          key: 'materials[0].name',
+          label: 'Material Name'
+        }, {
+          key: 'created',
+          label: 'Created Date',
+          formatter: (value) => this.$moment(value).format('L LT')
+        }, {
+          key: 'updated',
+          label: 'Updated Date',
+          formatter: (value) => value ? this.$moment(value).format('L LT') : ''
+        }
+      ],
     }
   },
   computed: {
-    username () {
+    username() {
       return this.$auth.user.sub
     }
   }, // TODO incluir uma lista com os materias que foram utilizados recentemente numa estrutura ???
@@ -24,6 +48,10 @@ export default {
     //const user = this.username == "me" ? this.$auth.user.sub : this.username
     this.$axios.$get(`/api/manufacturers/${this.username}`).then((response) => {
       this.manufacturer = response;
+    })
+
+    this.$axios.$get('/api/manufacturers/structures').then(r => {
+      this.structures = r;
     })
   }
 }
