@@ -22,6 +22,10 @@
         <th scope="row">Description</th>
         <td>{{ project.description }}</td>
       </tr>
+      <tr v-if="project.observations">
+        <th scope="row">Observations</th>
+        <td>{{ project.observations }}</td>
+      </tr>
       <tr>
         <th scope="row">Created</th>
         <td>{{ $moment(project.created).format("L LT") }}</td>

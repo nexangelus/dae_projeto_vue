@@ -32,6 +32,7 @@
       </tr>
       </tbody>
     </table>
+    <nuxt-link type="reset" class="btn btn-primary" :to="`/project/${id}/structure/${idS}/edit`">Edit Structure Details</nuxt-link>
     <p/>
     <div class="jumbotron">
       <h2>Materials TODO Lista materiais</h2>
@@ -73,19 +74,19 @@ export default {
     return {
       items: [{
         text: 'Dashboard',
-        to: { name: 'dashboard' }
+        to: {name: 'dashboard'}
       }, {
         text: 'Project',
         to: `/project/${this.$route.params.id}`
       }, {
-        text: 'Simulate',
+        text: 'Structure Details',
         active: true
       }],
       structure: {}
     };
   },
   computed: {
-    id () {
+    id() {
       return this.$route.params.id
     },
     idS() {
@@ -100,17 +101,17 @@ export default {
   },
   methods: {
     create() {
-      this.$axios.post(`/api/projects/${this.idProject}/upload`, this.formData(element),{
-            headers: {"Content-Type": "multipart/form-data",},
-          }
-        ).then((response) =>{
-          if(response.status ==200){
-            this.$toast.success(response.data).goAway(4000)
-          }else{
-            this.$toast.danger(response.data).goAway(4000)
-            ok = false
-          }
-        });
+      this.$axios.post(`/api/projects/${this.idProject}/upload`, this.formData(element), {
+          headers: {"Content-Type": "multipart/form-data",},
+        }
+      ).then((response) => {
+        if (response.status == 200) {
+          this.$toast.success(response.data).goAway(4000)
+        } else {
+          this.$toast.danger(response.data).goAway(4000)
+          ok = false
+        }
+      });
     },
   },
 };
