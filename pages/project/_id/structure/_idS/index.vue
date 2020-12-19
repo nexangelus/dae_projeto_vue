@@ -37,7 +37,10 @@
     <div class="jumbotron">
       <h2>Materials TODO Lista materiais</h2>
     </div>
-    <nuxt-link class="btn btn-primary" :to="`/project/${this.id}/structure/${this.idS}/simulate`" v-if="$auth.user.groups.includes('Designer')">Add Materials</nuxt-link>
+    <nuxt-link class="btn btn-primary" :to="`/project/${this.id}/structure/${this.idS}/status/acce`" v-if="$auth.user.groups.includes('Designer')">Add Materials</nuxt-link>
+    <p/>
+    <button v-if="$auth.user.groups.includes('Client') && structure.clientAccepted ==null " class="btn btn-success" v-on:click="accept()">Accepted</button>
+    <button v-if="$auth.user.groups.includes('Client') && structure.clientAccepted ==null" class="btn btn-danger" v-on:click="decline()">Declined</button>
     <p/>
     <table class="table table-striped">
       <tbody>
@@ -102,19 +105,26 @@ export default {
     })
   },
   methods: {
-    create() {
-      this.$axios.post(`/api/projects/${this.idProject}/upload`, this.formData(element), {
-          headers: {"Content-Type": "multipart/form-data",},
-        }
+    accept() {
+      this.$axios.patch(`/api/projects/${this.id}/structures/${this.idS}/status/true`
       ).then((response) => {
         if (response.status == 200) {
-          this.$toast.success(response.data).goAway(4000)
+          this.$toast.success("Done").goAway(4000)
         } else {
-          this.$toast.danger(response.data).goAway(4000)
-          ok = false
+          this.$toast.danger("Something went wrong").goAway(4000)
         }
       });
     },
+    decline() {
+      this.$axios.patch(`/api/projects/${this.id}/structures/${this.idS}/status/false`
+      ).then((response) => {
+        if (response.status == 200) {
+          this.$toast.success("Done").goAway(4000)
+        } else {
+          this.$toast.danger("Something went wrong").goAway(4000)
+        }
+      });
+    }
   },
 };
 </script>

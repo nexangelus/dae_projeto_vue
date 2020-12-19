@@ -36,11 +36,14 @@
                 <nuxt-link class="btn btn-primary" :to="`/materials/${data.item.id}`"><fa :icon="['fa', 'info-circle']" /></nuxt-link>
                 <a class="btn btn-danger" v-if="data.item.manufacturerUsername == manufacturerUsername" @click="remove(data.item.id)"><fa :icon="['fas', 'trash']" /></a>
               </template>
+              <template #cell(selected)="selected">
+                <b-checkbox v-model="selected.item.selected"/>
+              </template>
             </b-table>
           </b-card-body>
       </b-card>
     </div>
-    <button class="btn btn-primary" v-on:click="save()"><fa :icon="['fas', 'cogs']" /></button>
+    <button class="btn btn-primary" v-on:click="save()">Save</button>
   </div>
 </template>
 <script>
@@ -96,7 +99,7 @@ export default {
           key: 'thickness',
           label: 'Thickness'
         },
-        'actions'
+        'selected'
       ],
     };
   },
@@ -117,7 +120,7 @@ export default {
               id: material.id, familyName: material.family.name, materialName: material.name, weffP: material.profile.weff_p, weffN: material.profile.weff_n,
               ar: material.profile.ar, created: material.created, updated: material.updated, manufacturerUsername: material.manufacturerUsername,simulated:null, selected: false});
           } else if (material.sheet) {
-            this.sheets.push({id: material.id, familyName: material.family.name, materialName: material.name, thickness: material.sheet.thickness, created: material.created, updated: material.updated, manufacturerUsername: material.manufacturerUsername});
+            this.sheets.push({id: material.id, familyName: material.family.name, materialName: material.name, thickness: material.sheet.thickness, created: material.created, updated: material.updated, manufacturerUsername: material.manufacturerUsername, selected: false});
           }
         }
       });
