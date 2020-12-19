@@ -129,7 +129,7 @@ export default {
     showClient(toId){
       this.$axios.patch(`/api/projects/${this.id}/structures/${toId}/visibletoclient`).then((response) => {
         if(response.status == 200){
-          this.$toast.success('File Deleted').goAway(2000)
+          this.$toast.success('Client can see the structure').goAway(2000)
           location.reload()
         }else {
           this.$toast.error('Something went wrong').goAway(2000)
