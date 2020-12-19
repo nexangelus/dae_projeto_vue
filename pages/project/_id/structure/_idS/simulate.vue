@@ -139,15 +139,13 @@ export default {
         });
       }
       if(materialS != null){
-        materialS.forEach(element =>{
-        this.$axios.post(`/api/projects/${this.id}/structures/${this.idS}/material`, element).then((response) =>{
+        this.$axios.post(`/api/projects/${this.id}/structures/${this.idS}/material`, materialS).then((response) =>{
           if(response.status ==200){
             this.$toast.success(response.data).goAway(4000)
           }else{
             this.$toast.danger(response.data).goAway(4000)
           }
         });
-      });
       }
       
     },
