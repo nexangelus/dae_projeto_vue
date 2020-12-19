@@ -70,16 +70,15 @@
           <td v-if="$auth.user.groups.includes('Designer')">{{struct.visibleToClient}}</td>
           <td>{{struct.clientAccepted}}</td>
           <td>
-            <button class="btn btn-primary" :to="`/project/${project.id}/structure/create`"><fa :icon="['fas', 'download']" /></button>
+            <nuxt-link class="btn btn-primary" :to="`/project/${project.id}/structure/${struct.id}`"><fa :icon="['fas', 'asterisk']" /></nuxt-link>
             <button v-if="$auth.user.groups.includes('Designer')" class="btn btn-success" v-on:click="showClient(struct.id)"><fa :icon="['fas', 'info']" /></button>
           </td>
-        </tr>-->
+        </tr>
       </tbody>
     </table>
     <nuxt-link class="btn btn-primary" :to="`/project/${project.id}/structure/create`" v-if="$auth.user.groups.includes('Designer')">Create Struture</nuxt-link>
   </div>
 </template>
-
 <script>
 export default {
   name: "project-details",
