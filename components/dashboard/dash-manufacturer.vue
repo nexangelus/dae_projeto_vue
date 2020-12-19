@@ -5,9 +5,21 @@
     <div class="jumbotron">
       <h2>Structures with my materials</h2>
     </div>
-    <b-table striped hover :items="structures" :fields="structuresFields"> TODO TABLE
-
+    <b-form-input
+      v-model="filter"
+      type="search"
+      placeholder="Type to Search"
+    ></b-form-input>
+    <b-table id="table-structures" striped hover :items="structures" :fields="structuresFields" :per-page="perPage"
+             :current-page="currentPage" :filter="filter" @filtered="onFiltered">
     </b-table>
+    <b-pagination
+      v-model="currentPage"
+      :total-rows="rows"
+      :per-page="perPage"
+      limit="10"
+      aria-controls="table-structures"
+    ></b-pagination>
   </div>
 </template>
 
@@ -37,6 +49,10 @@ export default {
           formatter: (value) => value ? this.$moment(value).format('L LT') : ''
         }
       ],
+      currentPage: 1,
+      rows: 0,
+      perPage: 5,
+      filter: null
     }
   },
   computed: {
@@ -53,6 +69,12 @@ export default {
     this.$axios.$get('/api/manufacturers/structures').then(r => {
       this.structures = r;
     })
+  },
+  methods: {
+    onFiltered(filteredItems) {
+      this.rows = filteredItems.length
+      this.currentPage = 1
+    }
   }
 }
 </script>

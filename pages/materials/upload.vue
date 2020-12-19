@@ -4,6 +4,16 @@
     <div class="jumbotron">
       <h2>Upload Files</h2>
     </div>
+    <div class="alert alert-secondary" role="alert">
+      <h4 class="alert-heading">Warning!</h4>
+      <p>You can download an empty file <a href="/empty.xlsx">here</a>, and an example file <a href="/example.xlsx">here</a>.</p>
+      <hr>
+      <p class="mb-0">This process must only be done when you know that the file is correct. If you select a wrong file and proceed with the upload, it can mess up your list of materials.</p>
+      <p class="mb-0">You must make sure that the file name is like the following:</p>
+      <pre>{Family Name}.xlsx</pre>
+      <p class="mb-0">Where {Family Name} is the name of the Family of Materials you're importing, example: </p>
+      <pre>Section C S220 BF.xlsx</pre>
+    </div>
     <form @submit.prevent="upload">
       <b-form-file
         multiple
