@@ -52,30 +52,12 @@
     <p/>
     <table class="table table-striped">
       <tbody>
-      <tr>
-        <th scope="row">Name</th>
-        <td>{{ structure.name }}</td>
-      </tr>
-      <tr>
-        <th scope="row">Load</th>
-        <td>{{ structure.q }}</td>
-      </tr>
-      <tr>
-        <th scope="row">Number</th>
-        <td>{{ structure.nb }}</td>
-      </tr>
-      <tr>
-        <th scope="row">Distance</th>
-        <td>{{ structure.LVao }}</td>
-      </tr>
-      <tr>
-        <th scope="row">Created</th>
-        <td>{{ $moment(structure.created).format("L LT") }}</td>
-      </tr>
-      <tr v-if="structure.updated">
-        <th scope="row">Updated</th>
-        <td>{{ $moment(structure.updated).format("L LT") }}</td>
-      </tr>
+        <tr>
+          <th>Name</th>
+        </tr>
+        <tr v-for="material of structure.materials" :key="material.id" >
+            <td>{{material.name}}</td>
+        </tr>
       </tbody>
     </table>
   </div>
