@@ -47,7 +47,7 @@
           <th>File Name</th>
           <th>Action</th>
         </tr>
-        <tr v-for="upload of project.uploadDTOS" :key="upload.id">
+        <tr v-for="upload of project.uploadDTOS" :key="upload.id"> TODO TABLE
           <td>{{upload.filename}}</td>
           <td>
             <button class="btn btn-primary" v-on:click="download(upload.id, upload.filename)"><fa :icon="['fas', 'download']" /></button>
@@ -66,7 +66,7 @@
           <th>Name</th>
           <th v-if="$auth.user.groups.includes('Designer')">Visible to Client</th>
           <th>Client Accepted</th>
-          <th>Action</th>
+          <th>Action</th> TODO TABLE
         </tr>
         <tr v-for="struct of project.structureDTOS" :key="struct.id" >
             <td>{{struct.name}}</td>

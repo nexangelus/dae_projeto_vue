@@ -63,7 +63,7 @@
               placeholder="Type to Search"
             ></b-form-input>
             <b-table id="table-sheets" striped hover :items="sheets" :fields="sheetsFields" :per-page="tables.perPage"
-                     :current-page="tables.sheets.currentPage">
+                     :current-page="tables.sheets.currentPage" :filter="tables.sheets.filter">
               <template #cell(actions)="data">
                 <nuxt-link class="btn btn-primary" :to="`/materials/${data.item.id}`">
                   <fa :icon="['fa', 'info-circle']"/>

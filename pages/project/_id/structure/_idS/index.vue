@@ -32,15 +32,23 @@
       </tr>
       </tbody>
     </table>
-    <nuxt-link type="reset" class="btn btn-primary" :to="`/project/${id}/structure/${idS}/edit`">Edit Structure Details</nuxt-link>
+    <nuxt-link type="reset" class="btn btn-primary" :to="`/project/${id}/structure/${idS}/edit`">Edit Structure
+      Details
+    </nuxt-link>
     <p/>
     <div class="jumbotron">
       <h2>Materials TODO Lista materiais</h2>
     </div>
-    <nuxt-link class="btn btn-primary" :to="`/project/${this.id}/structure/${this.idS}/status/acce`" v-if="$auth.user.groups.includes('Designer')">Add Materials</nuxt-link>
+    <nuxt-link class="btn btn-primary" :to="`/project/${this.id}/structure/${this.idS}/simulate`"
+               v-if="$auth.user.groups.includes('Designer')">Add Materials
+    </nuxt-link>
     <p/>
-    <button v-if="$auth.user.groups.includes('Client') && structure.clientAccepted ==null " class="btn btn-success" v-on:click="accept()">Accepted</button>
-    <button v-if="$auth.user.groups.includes('Client') && structure.clientAccepted ==null" class="btn btn-danger" v-on:click="decline()">Declined</button>
+    <button v-if="$auth.user.groups.includes('Client') && structure.clientAccepted ==null " class="btn btn-success"
+            v-on:click="accept()">Accepted
+    </button>
+    <button v-if="$auth.user.groups.includes('Client') && structure.clientAccepted ==null" class="btn btn-danger"
+            v-on:click="decline()">Declined
+    </button>
     <p/>
     <table class="table table-striped">
       <tbody>

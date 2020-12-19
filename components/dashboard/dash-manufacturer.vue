@@ -5,7 +5,7 @@
     <div class="jumbotron">
       <h2>Structures with my materials</h2>
     </div>
-    <b-table striped hover :items="structures" :fields="structuresFields">
+    <b-table striped hover :items="structures" :fields="structuresFields"> TODO TABLE
 
     </b-table>
   </div>

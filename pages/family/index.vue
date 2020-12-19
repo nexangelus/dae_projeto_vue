@@ -5,7 +5,7 @@
       <h2>Product Families</h2>
     </div>
     <nuxt-link class="btn btn-success" :to="{name: 'family-create'}"><fa :icon="['fas', 'plus']" /></nuxt-link>
-    <table class="table table-striped">
+    <table class="table table-striped"> TODO TABLE
       <tr>
         <th>ID</th>
         <th>Name</th>
