@@ -10,7 +10,14 @@
           <b-button block v-b-toggle.accordion-profile variant="info">Profiles</b-button>
         </b-card-header>
         <b-card-body>
-          <b-table striped hover :items="profiles" :fields="profilesFields"> TODO TABLE
+          <b-form-input
+            id="filter-input-profiles"
+            v-model="tables.profiles.filter"
+            type="search"
+            placeholder="Type to Search"
+          ></b-form-input>
+          <b-table striped hover :items="profiles" :fields="profilesFields"
+                   :filter="tables.profiles.filter" @filtered="onFilteredProfiles">
             <template #cell(actions)="data">
               <button class="btn btn-primary" v-on:click="simulate(data.item.id)">
                 <fa :icon="['fas', 'cogs']"/>
@@ -32,16 +39,28 @@
           <b-button block v-b-toggle.accordion-sheet variant="info">Sheets</b-button>
         </b-card-header>
         <b-card-body>
-            <b-table striped hover :items="sheets" :fields="sheetsFields">
-              <template #cell(actions)="data">
-                <nuxt-link class="btn btn-primary" :to="`/materials/${data.item.id}`"><fa :icon="['fa', 'info-circle']" /></nuxt-link>
-                <a class="btn btn-danger" v-if="data.item.manufacturerUsername == manufacturerUsername" @click="remove(data.item.id)"><fa :icon="['fas', 'trash']" /></a>
-              </template>
-              <template #cell(selected)="selected">
-                <b-checkbox v-model="selected.item.selected"/>
-              </template>
-            </b-table>
-          </b-card-body>
+          <b-form-input
+            id="filter-input-profiles"
+            v-model="tables.sheets.filter"
+            type="search"
+            placeholder="Type to Search"
+          ></b-form-input>
+          <b-table striped hover :items="sheets" :fields="sheetsFields"
+                   :filter="tables.sheets.filter" @filtered="onFilteredSheets">
+            <template #cell(actions)="data">
+              <nuxt-link class="btn btn-primary" :to="`/materials/${data.item.id}`">
+                <fa :icon="['fa', 'info-circle']"/>
+              </nuxt-link>
+              <a class="btn btn-danger" v-if="data.item.manufacturerUsername == manufacturerUsername"
+                 @click="remove(data.item.id)">
+                <fa :icon="['fas', 'trash']"/>
+              </a>
+            </template>
+            <template #cell(selected)="selected">
+              <b-checkbox v-model="selected.item.selected"/>
+            </template>
+          </b-table>
+        </b-card-body>
       </b-card>
     </div>
     <button class="btn btn-primary" v-on:click="save()">Save</button>
@@ -102,6 +121,14 @@ export default {
         },
         'selected'
       ],
+      tables: {
+        profiles: {
+          filter: null
+        },
+        sheets: {
+          filter: null
+        }
+      },
     };
   },
   computed: {
@@ -131,7 +158,16 @@ export default {
               selected: false
             });
           } else if (material.sheet) {
-            this.sheets.push({id: material.id, familyName: material.family.name, materialName: material.name, thickness: material.sheet.thickness, created: material.created, updated: material.updated, manufacturerUsername: material.manufacturerUsername, selected: false});
+            this.sheets.push({
+              id: material.id,
+              familyName: material.family.name,
+              materialName: material.name,
+              thickness: material.sheet.thickness,
+              created: material.created,
+              updated: material.updated,
+              manufacturerUsername: material.manufacturerUsername,
+              selected: false
+            });
           }
         }
       });
@@ -149,11 +185,11 @@ export default {
           }
         });
       }
-      if(materialS != null){
-        this.$axios.post(`/api/projects/${this.id}/structures/${this.idS}/material`, materialS).then((response) =>{
-          if(response.status ==200){
+      if (materialS != null) {
+        this.$axios.post(`/api/projects/${this.id}/structures/${this.idS}/material`, materialS).then((response) => {
+          if (response.status == 200) {
             this.$toast.success(response.data).goAway(4000)
-          }else{
+          } else {
             this.$toast.danger(response.data).goAway(4000)
           }
         });
@@ -177,6 +213,14 @@ export default {
           this.$toast.danger("Something went wrong").goAway(4000)
         }
       });
+    },
+    onFilteredProfiles(filteredItems) {
+      this.tables.profiles.rows = filteredItems.length
+      this.tables.profiles.currentPage = 1
+    },
+    onFilteredSheets(filteredItems) {
+      this.tables.sheets.rows = filteredItems.length
+      this.tables.sheets.currentPage = 1
     }
   },
 };

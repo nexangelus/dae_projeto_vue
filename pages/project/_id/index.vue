@@ -47,7 +47,7 @@
           <th>File Name</th>
           <th>Action</th>
         </tr>
-        <tr v-for="upload of project.uploadDTOS" :key="upload.id"> TODO TABLE
+        <tr v-for="upload of project.uploadDTOS" :key="upload.id">
           <td>{{upload.filename}}</td>
           <td>
             <button class="btn btn-primary" v-on:click="download(upload.id, upload.filename)"><fa :icon="['fas', 'download']" /></button>
