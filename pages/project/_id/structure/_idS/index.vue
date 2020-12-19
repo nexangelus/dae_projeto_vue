@@ -37,6 +37,8 @@
     <div class="jumbotron">
       <h2>Materials TODO Lista materiais</h2>
     </div>
+    <nuxt-link class="btn btn-primary" :to="`/project/${this.id}/structure/${this.idS}/simulate`" v-if="$auth.user.groups.includes('Designer')">Add Materials</nuxt-link>
+    <p/>
     <table class="table table-striped">
       <tbody>
       <tr>
