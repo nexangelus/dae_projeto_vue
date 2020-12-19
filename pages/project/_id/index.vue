@@ -37,7 +37,6 @@
       </tbody>
     </table>
     <nuxt-link class="btn btn-primary" :to="`/project/${project.id}/update/`">Update Project Details</nuxt-link>
-    <nuxt-link class="btn btn-primary" :to="`/project/${project.id}/structure/simulate`" v-if="$auth.user.groups.includes('Designer')">Simulate</nuxt-link>
     <p/>
     <div class="jumbotron" style="padding: 2rem;">
       <h3>Uploads</h3>
@@ -124,7 +123,7 @@ export default {
         return item.visibleToClient
       })
     }
-    
+
   },
   mounted() {
     //const user = this.username == "me" ? this.$auth.user.sub : this.username
