@@ -1,6 +1,5 @@
 <template>
-  <div class="container-fluid">
-    <b-breadcrumb :items="items"></b-breadcrumb>
+  <div>
     <div class="jumbotron">
       <h2>{{ isUpdate ? "Update Project" : "Create new Project" }}</h2>
     </div>
@@ -43,17 +42,7 @@ export default {
       designerUsername: this.$auth.user.sub,
       title: null,
       description: null,
-      observations: null,
-      items: [{
-        text: 'Dashboard',
-        to: {name: 'dashboard'}
-      }, {
-        text: 'Project',
-        to: {name: 'project'}
-      }, {
-        text: 'Create',
-        to: {name: 'project-create'}
-      }]
+      observations: null
     }
   },
   computed: {

@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="container-fluid">
+    <b-breadcrumb :items="items"></b-breadcrumb>
     <Create/>
   </div>
 </template>
@@ -11,7 +12,14 @@ export default {
   name: 'project-create',
   data: function () {
     return {
-      projects: null
+      projects: null,
+      items: [{
+        text: 'Dashboard',
+        to: {name: 'dashboard'}
+      }, {
+        text: 'Create Project',
+        active: true
+      }]
     }
   },
   computed: {

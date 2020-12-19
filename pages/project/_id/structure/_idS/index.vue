@@ -76,7 +76,7 @@ export default {
         text: 'Dashboard',
         to: {name: 'dashboard'}
       }, {
-        text: 'Project',
+        text: 'Project Details',
         to: `/project/${this.$route.params.id}`
       }, {
         text: 'Structure Details',

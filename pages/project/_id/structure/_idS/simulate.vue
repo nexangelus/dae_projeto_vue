@@ -5,8 +5,8 @@
       <h2>Simulate</h2>
     </div>
     <form @submit.prevent="create">
-    
-    
+
+
         <b-button type="submit" :disabled="!hasFile">SAVE</b-button>
     </form>
   </div>
@@ -21,7 +21,7 @@ export default {
         text: 'Dashboard',
         to: { name: 'dashboard' }
       }, {
-        text: 'Project',
+        text: 'Project Details',
         to: `/project/${this.$route.params.id}`
       }, {
         text: 'Simulate',
